@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, BrowserRouter,Routes, Navigate } from "react-router-dom";
+import Main from "./components/Main/mainindex.js";
+import Signup from "./components/Singup";
+import Login from "./components/Login";
+import Edit from "./components/Main/Edit.js";
+import Details from "./components/Main/Details.js";
+import EmployeeList from "./components/Main/employeelist.js";
+import "./App.css"
+import Register from "./components/Main/Register.js";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const user = localStorage.getItem("token");
+
+	return (
+		<BrowserRouter>
+		<Routes>
+			{user && <Route path='/'  exact element={<Main />} />}
+			<Route path="/signup" exact element={<Signup />} />
+			<Route path="/login" exact element={<Login />} />
+			<Route path="/employeelist" exact element={<EmployeeList />} />
+			<Route exact path="/edit/:id" element={<Edit/>} />
+      <Route exact path="employeelist/view/:id"  element={<Details/>} />
+      <Route path="/register" exact element={<Register />} />
+			<Route path="/" element={<Navigate replace to="/login" />} />
+			</Routes>
+		</BrowserRouter>
   );
 }
 
